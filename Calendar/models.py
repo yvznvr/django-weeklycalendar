@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.contrib.auth.models import User
 
 
 REPEAT_FREQ = (
@@ -30,7 +31,8 @@ class Activity(models.Model):
     color = models.CharField(verbose_name="Color", max_length=7, choices=COLORS, default="gray")
     private = models.BooleanField(verbose_name="Private", default=False)
     comment = models.TextField(verbose_name="Comment", blank=True, null=True)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.title + " " + str(self.start_time) + "-" + str(self.finish_time)
 
