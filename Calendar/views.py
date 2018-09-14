@@ -42,3 +42,12 @@ def get_data(request, id):
             'finish_time':data.finish_time.__str__(), 'repeat_fre':data.repeat_fre, 'repeat_time':data.repeat_time,
             'location':data.location, 'color':data.color, 'private':data.private, 'comment':data.comment}
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+def delete_data(request, id):
+    if(request.method != 'GET'):
+        return HttpResponseNotFound()
+    try:
+        Activity.objects.get(id=id).delete()
+        return HttpResponse()
+    except:
+        return HttpResponseNotFound()
