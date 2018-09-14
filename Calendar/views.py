@@ -2,6 +2,7 @@ from django.shortcuts import render
 from datetime import date, timedelta, datetime
 from .models import Activity
 import json
+from django.http import HttpResponse, HttpResponseNotFound
 
 def convert_data(activities_object):
     """
@@ -29,3 +30,15 @@ def calendar(request):
     return render(request, "WeaklyCalendar.html", {'activities' : activities,'week' : week,
                             'year' : year, 'range7' : range(7), 'range24' : range(24)})
 
+
+def get_data(request, id):
+    if(request.method != 'GET'):
+        return HttpResponseNotFound()
+    try:
+        data = Activity.objects.get(id=id)
+    except:
+        return HttpResponseNotFound()
+    data = {'id':data.id, 'title':data.title, 'date':data.date.__str__(), 'start_time':data.start_time.__str__(),
+            'finish_time':data.finish_time.__str__(), 'repeat_fre':data.repeat_fre, 'repeat_time':data.repeat_time,
+            'location':data.location, 'color':data.color, 'private':data.private, 'comment':data.comment}
+    return HttpResponse(json.dumps(data), content_type="application/json")

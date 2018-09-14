@@ -41,16 +41,6 @@
                     <th>{{day}}</th>
                     {% endfor %}
                 </tr>
-                <tr>
-                    <th>1. Saat</th>
-                    <td>adasd dasdadasj</td>
-                    <td>2. Gün</td>
-                    <td>3. Gün</td>
-                    <td> <a id="birinci">4. Gün</a> <a id="ikinci">4. Gün</a> </td>
-                    <td>5. Gün</td>
-                    <td>6. Gün</td>
-                    <td id="Çok işler var"></td>
-                </tr>
                 {% for i in range24 %}
                 <tr> 
                     <th>{{i}}:00</th>
@@ -79,10 +69,10 @@
             <form>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="baslik">Başlık</label>
+                        <label for="title">Başlık</label>
             </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="baslik" placeholder="Başlık Giriniz">
+                <input type="text" class="form-control" id="title" placeholder="Başlık Giriniz">
             </div>
             </div>
             <div class="row">
@@ -90,7 +80,7 @@
                     <label for="datepicker">Tarih</label>
                 </div>
                 <div class="input-group date col-md-6" id="datepicker">
-                <input type="text" class="form-control" id="tarih" placeholder="Tarih">
+                <input type="text" class="form-control" id="date" placeholder="Tarih">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -101,7 +91,7 @@
                     <label for="timepicker-start">Başlangıç Saati</label>
                 </div>        
                 <div class="input-group date col-md-6" id="timepicker-start">
-                    <input type='text' id="bas-saat" class="form-control" placeholder="Başlangıç Saati" />
+                    <input type='text' id="start_time" class="form-control" placeholder="Başlangıç Saati" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>
@@ -112,7 +102,7 @@
                         <label for="timepicker-end">Bitiş Saati</label>
                     </div> 
             <div class="input-group date col-md-6" id="timepicker-end">
-                <input type='text' id="bit-saat" class="form-control" placeholder="Bitiş Saati" />
+                <input type='text' id="finish_time" class="form-control" placeholder="Bitiş Saati" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-time"></span>
                 </span>
@@ -120,48 +110,48 @@
             </div>  
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="periyot">Tekrar Sıklığı</label>
+                        <label for="repeat_fre">Tekrar Sıklığı</label>
                     </div> 
             <div class="form-group col-md-6">
-                <select class="form-control" id="periyot">
-                    <option>Gün</option>
-                    <option>Hafta</option>
-                    <option>Ay</option>
-                    <option>Yıl</option>
+                <select class="form-control" id="repeat_fre">
+                    <option value="1">Gün</option>
+                    <option value="2">Hafta</option>
+                    <option value="3">Ay</option>
+                    <option value="4">Yıl</option>
                 </select>
             </div>
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="tekrar">Tekrar Sayısı</label>
+                        <label for="repeat_time">Tekrar Sayısı</label>
                     </div> 
             <div class="form-group col-md-6">
-                <input type="number" min=1 max=20 class="form-control" id="tekrar" placeholder="1">
+                <input type="number" min=1 max=20 class="form-control" id="repeat_time" placeholder="1">
             </div>  
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="konum">Konum</label>
+                        <label for="location">Konum</label>
                     </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="konum" placeholder="Konum">
+                <input type="text" class="form-control" id="location" placeholder="Konum">
             </div>   
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="renk">Renk</label>
+                        <label for="color">Renk</label>
                     </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="renk" placeholder="Renk">
+                <input type="text" class="form-control" id="color" placeholder="Renk">
             </div>                        
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="ozel">
+                <input type="checkbox" class="form-check-input" id="private">
                 <label class="form-check-label" for="ozel<">Özel Mi?</label>
             </div>
             <div class="form-group">
-                <label for="aciklama">Açıklama</label>
-                <textarea class="form-control" id="aciklama" rows="2"></textarea>
+                <label for="comment">Açıklama</label>
+                <textarea class="form-control" id="comment" rows="2"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Onayla</button>
             </form>
@@ -185,14 +175,27 @@
       };
 
     data = {{ activities | safe }};
-    console.log(data);
     for(i=0;i<data.length;i++){
-        console.log(data[i].date);
         for(j=parseInt(data[i].start_time);j<=parseInt(data[i].finish_time);j++){
             var str = "<a id={0}>{1}</a>".format(data[i].id, data[i].title)
             $("#"+j+"-"+data[i].date).append(str);
         };
     };
+
+    $("a").click(function () {
+        $.ajax({
+            url: "/calendar/get/"+this.id,
+            type: 'get',
+            success: function (data) {
+                Object.keys(data).forEach(function(key) {
+                    if(key=='private'){
+                        $("#{0}".format(key)).prop("checked", data[key]);
+                    }
+                    $("#{0}".format(key)).val(data[key]);
+                });
+            },
+        });
+    });
 </script>
 <script src="{% static "js/main.js" %}"></script>
 

@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 
 
 REPEAT_FREQ = (
-    (1, "Day"),
-    (2, "Week"),
-    (3, "Month"),
-    (4, "Year")
+    ('1', "Day"),
+    ('2', "Week"),
+    ('3', "Month"),
+    ('4', "Year")
 )
 
 COLORS = [
