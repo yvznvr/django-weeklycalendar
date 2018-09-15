@@ -5,13 +5,14 @@ import json
 from django.http import HttpResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 
+
 def convert_data(activities_object):
     """
     get result of query and translate it serializable format
     """
     data = []
     for i in activities_object:
-        data.append({'id':i.id, 'title':i.__str__(), 'date':str(i.date.day), 
+        data.append({'id':i.id, 'title':i.__str__(), 'color':i.color, 'date':str(i.date.day),
             'start_time':str(int(str(i.start_time)[0:2])), 'finish_time':str(int(str(i.finish_time)[0:2]))})
     return data
 

@@ -143,7 +143,15 @@
                         <label for="color">Renk</label>
                     </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="color" placeholder="Renk">
+                    <select class="form-control" id="color">
+                    <option value="#eeeeee">Gray</option>
+                    <option value="#ff0000">Red</option>
+                    <option value="#0000ff">Blue</option>
+                    <option value="#00ff00">Green</option>
+                    <option value="#000000">Black</option>
+                    <option value="#ffffff">White</option>
+                    <option value="#7E8F7C">Khaki</option>
+                </select>
             </div>                        
             </div>
             <div class="form-check">
@@ -178,7 +186,7 @@
     data = {{ activities | safe }};
     for(i=0;i<data.length;i++){
         for(j=parseInt(data[i].start_time);j<=parseInt(data[i].finish_time);j++){
-            var str = "<a id={0} class={1}>{2}</a>".format(data[i].id, data[i].id, data[i].title)
+            var str = "<a id={0} class={1} style=background-color:{2}>{3}</a>".format(data[i].id, data[i].id, data[i].color, data[i].title)
             $("#"+j+"-"+data[i].date).append(str);
         };
     };
