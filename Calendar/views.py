@@ -3,6 +3,7 @@ from datetime import date, timedelta, datetime
 from .models import Activity
 import json
 from django.http import HttpResponse, HttpResponseNotFound
+from django.contrib.auth.decorators import login_required
 
 def convert_data(activities_object):
     """
@@ -15,6 +16,7 @@ def convert_data(activities_object):
     return data
 
 
+@login_required()
 def calendar(request):
     first_day = date.today().weekday()
     first_day = timedelta(days=first_day)
@@ -32,6 +34,7 @@ def calendar(request):
                             'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month})
 
 
+@login_required()
 def get_data(request, id):
     if(request.method != 'GET'):
         return HttpResponseNotFound()
@@ -45,6 +48,7 @@ def get_data(request, id):
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
+@login_required()
 def delete_data(request, id):
     if(request.method != 'GET'):
         return HttpResponseNotFound()
@@ -55,6 +59,7 @@ def delete_data(request, id):
         return HttpResponseNotFound()
 
 
+@login_required()
 def save_data(request, id):
     print(request.POST)
     print(type(id))
