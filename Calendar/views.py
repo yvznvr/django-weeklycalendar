@@ -19,6 +19,7 @@ def calendar(request):
     first_day = date.today().weekday()
     first_day = timedelta(days=first_day)
     first_day = date.today() - first_day
+    month = first_day.month
     # get activities between monday and sunday
     activities = Activity.objects.filter(user=request.user, date__range=(first_day, first_day+timedelta(days=6)))
     activities = convert_data(activities)   # get this data with js for draw activies on table
@@ -28,7 +29,7 @@ def calendar(request):
         delta = timedelta(days=i)
         week.append(datetime.strftime((first_day+delta), "%d-%B"))
     return render(request, "WeaklyCalendar.html", {'activities' : activities,'week' : week,
-                            'year' : year, 'range7' : range(7), 'range24' : range(24)})
+                            'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month})
 
 
 def get_data(request, id):
@@ -43,6 +44,7 @@ def get_data(request, id):
             'location':data.location, 'color':data.color, 'private':data.private, 'comment':data.comment}
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+
 def delete_data(request, id):
     if(request.method != 'GET'):
         return HttpResponseNotFound()
@@ -51,3 +53,31 @@ def delete_data(request, id):
         return HttpResponse()
     except:
         return HttpResponseNotFound()
+
+
+def save_data(request, id):
+    print(request.POST)
+    print(type(id))
+    # id = 0 means new activity
+    if(id != "0"):
+        try:
+            act = Activity.objects.get(id=id, user_id=request.user.id)
+        except:
+            return HttpResponseNotFound()
+    else:
+        act = Activity(user_id=request.user.id)
+
+    act.title = request.POST['title']
+    act.date = datetime.strptime(request.POST.get('date'), '%Y-%m-%d')
+    act.start_time = datetime.strptime(request.POST.get('start_time'), '%H:%M:%S')
+    act.finish_time = datetime.strptime(request.POST.get('finish_time'), '%H:%M:%S')
+    act.location = request.POST['location']
+    act.color = request.POST['color']
+    act.private = request.POST['private'] == True
+    act.comment = request.POST['comment']
+    print(act.date, act.start_time)
+    act.repeat_fre = request.POST['repeat_fre']
+    act.repeat_time = int(request.POST['repeat_time'])
+    act.save()
+
+    return HttpResponse(json.dumps({'success': True}),content_type="application/json")

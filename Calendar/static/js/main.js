@@ -23,12 +23,12 @@ function tableText(tableCell) {
 
 $(function () {
     $('#timepicker-start').datetimepicker({
-        format: 'LT'
+        format: 'HH:mm:ss'
     });
     $('#timepicker-end').datetimepicker({
-        format: 'LT'
+        format: 'HH:mm:ss'
     });
     $('#datepicker').datetimepicker({
-        format: 'L'
+        format: 'YYYY-MM-DD'
     });
 });
