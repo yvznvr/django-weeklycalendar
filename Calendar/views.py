@@ -41,6 +41,8 @@ def get_data(request, id):
         return HttpResponseNotFound()
     try:
         data = Activity.objects.get(id=id)
+        data = Activity.objects.filter(title=data.title, start_time=data.start_time,
+                                      finish_time=data.finish_time).first()
     except:
         return HttpResponseNotFound()
     data = {'id':data.id, 'title':data.title, 'date':data.date.__str__(), 'start_time':data.start_time.__str__(),
@@ -62,8 +64,6 @@ def delete_data(request, id):
 
 @login_required()
 def save_data(request, id):
-    print(request.POST)
-    print(type(id))
     # id = 0 means new activity
     if(id != "0"):
         try:
@@ -81,7 +81,6 @@ def save_data(request, id):
     act.color = request.POST['color']
     act.private = request.POST['private'] == True
     act.comment = request.POST['comment']
-    print(act.date, act.start_time)
     act.repeat_fre = request.POST['repeat_fre']
     act.repeat_time = int(request.POST['repeat_time'])
     act.save()

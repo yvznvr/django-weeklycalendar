@@ -214,8 +214,8 @@
             type: 'get',
             item: this.name,
             success: function (data) {
-                $(".{0}".format(this.item)).remove();
-
+                {# $(".{0}".format(this.item)).remove(); #}
+                window.location.href = "/calendar";
             },
         });
     });
