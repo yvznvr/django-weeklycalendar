@@ -245,7 +245,7 @@
                 repeat_time: $("#repeat_time").val(),
                 location: $("#location").val(),
                 color: $("#color").val(),
-                private: $("#private").val(),
+                private: $("#private").is(":checked"),
                 comment: $("#comment").val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val() },
             success: function () {

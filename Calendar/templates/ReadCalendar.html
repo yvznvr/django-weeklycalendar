@@ -1,0 +1,90 @@
+{% load staticfiles %}
+
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.min.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/moment.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+
+<link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+
+<script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/main.css" %}" />
+</head>
+<body>
+<div class="row">
+    <div class="row">
+    <button id="back" class="col-md-3" align="left" onclick=location.href='?n={{ way.0 }}'>Backward</span> </button>
+    <div align="center">
+        <strong class="col-md-6" id="year">{{ week.0 }} - {{ week.6 }} - {{ year }}</strong>
+    </div>
+    <button class="col-md-3" align="right" onclick=location.href='?n={{ way.1 }}'>Forward</span> </button>
+    </div>
+    {% load filters %}
+    <div class="table-responsive" align="center">
+        <div class="col-md-12">
+            <table id="calendar" class="table">
+                <tr>
+                    <th></th>
+                    {% for day in week %}
+                    <th>{{day}}</th>
+                    {% endfor %}
+                </tr>
+                {% for i in range24 %}
+                <tr> 
+                    <th>{{i}}:00</th>
+                    {% for j in range7 %}
+                        {# id is time-day for example 8-17 it means 17th day of month and time is 8 #}
+                        <td id={{i}}-{{week|lookup:j|slice:"0:2"}}></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    String.prototype.format = function() {
+        var str = this;
+        for (var i = 0; i < arguments.length; i++) {
+          var reg = new RegExp("\\{" + i + "\\}", "gm");
+          str = str.replace(reg, arguments[i]);
+        }
+        return str;
+      };
+
+    data = {{ activities | safe }};
+    for(i=0;i<data.length;i++){
+        for(j=parseInt(data[i].start_time);j<=parseInt(data[i].finish_time);j++){
+            var str = "<a id={0} class={1} style=background-color:{2}>{3}</a>".format(data[i].id, data[i].id, data[i].color, data[i].title)
+            if(parseInt(data[i].date)<10)
+            {
+                $("#"+j+"-0"+data[i].date).append(str);
+            }
+            else{
+                $("#"+j+"-"+data[i].date).append(str);
+            }
+
+        };
+    };
+
+
+</script>
+
+</html>

@@ -32,8 +32,3 @@ $(function () {
         format: 'YYYY-MM-DD'
     });
 });
-
-function myWay(n) {
-    if(n=='') return 1;
-    return parseInt(n) + 1;
-}

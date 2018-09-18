@@ -4,6 +4,7 @@ from .models import Activity
 import json
 from django.http import HttpResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def convert_data(activities_object):
@@ -22,7 +23,6 @@ def calendar(request):
     first_day = date.today().weekday()
     first_day = timedelta(days=first_day)
     first_day = date.today() - first_day
-    print(request.GET.urlencode())
     way = [-1,1]
     try:
         way[0] = int(request.GET['n']) - 1
@@ -42,6 +42,38 @@ def calendar(request):
         week.append(datetime.strftime((first_day+delta), "%d-%B"))
     return render(request, "WeaklyCalendar.html", {'activities' : activities,'week' : week,
                             'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month, 'way' : way})
+
+
+def view_page(request, user):
+    first_day = date.today().weekday()
+    first_day = timedelta(days=first_day)
+    first_day = date.today() - first_day
+    way = [-1,1]
+    try:
+        way[0] = int(request.GET['n']) - 1
+        way[1] = int(request.GET['n']) + 1
+        delta = timedelta(days=int(request.GET['n']) * 7)
+        first_day = first_day + delta
+    except:
+        pass
+
+    try:
+        user = User.objects.get(username=user)
+        activities = Activity.objects.filter(user=user, private=False, date__range=(first_day, first_day + timedelta(days=6)))
+    except:
+        return HttpResponseNotFound()
+
+    activities = convert_data(activities)   # get this data with js for draw activies on table
+    week = []
+    year = first_day.year
+    month = first_day.month
+    for i in range(7):
+        delta = timedelta(days=i)
+        week.append(datetime.strftime((first_day+delta), "%d-%B"))
+    return render(request, "ReadCalendar.html", {'activities' : activities,'week' : week,
+                            'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month, 'way' : way})
+
+
 
 
 @login_required()
@@ -88,7 +120,7 @@ def save_data(request, id):
     act.finish_time = datetime.strptime(request.POST.get('finish_time'), '%H:%M:%S')
     act.location = request.POST['location']
     act.color = request.POST['color']
-    act.private = request.POST['private'] == True
+    act.private = request.POST['private'] == 'true'
     act.comment = request.POST['comment']
     act.repeat_fre = request.POST['repeat_fre']
     act.repeat_time = int(request.POST['repeat_time'])
