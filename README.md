@@ -3,7 +3,7 @@ django-weeklycalendar
 =====================
 
 
-django-weeklycalendar is a simple calendar that keep activities and publish it to people in weekly form.
+django-weeklycalendar is a simple calendar that keep activities and publish it with people in weekly form.
 
 Quick Start
 -----------
