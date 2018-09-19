@@ -8,15 +8,16 @@ django-weeklycalendar is a simple calendar that keep activities and publish it w
 Quick Start
 -----------
 
-1. Install django-weeklycalendar
+1. Install django-weeklycalendar and python-dateutil
     
     pip install django-weeklycalendar
+    pip install python-dateutil
     
 2. Add django-weeklycalendar to your INSTALLED_APPS in setting.py
 
     INSTALLED_APPS = [
         ...
-        'django-weeklycalendar',
+        'Calendar',
     ]
     
 3. Include the polls URLconf in your project urls.py
