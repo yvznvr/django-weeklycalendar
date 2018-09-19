@@ -1,6 +1,7 @@
-=====================
+
 django-weeklycalendar
 =====================
+
 
 django-weeklycalendar is a simple calendar that keep activities and publish it to people in weekly form.
 
