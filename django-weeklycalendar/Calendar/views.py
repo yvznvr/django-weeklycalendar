@@ -40,7 +40,7 @@ def calendar(request):
     for i in range(7):
         delta = timedelta(days=i)
         week.append(datetime.strftime((first_day+delta), "%d-%B"))
-    return render(request, "WeaklyCalendar.html", {'activities' : activities,'week' : week,
+    return render(request, "Calendar/WeaklyCalendar.html", {'activities' : activities,'week' : week,
                             'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month, 'way' : way})
 
 
@@ -70,7 +70,7 @@ def view_page(request, user):
     for i in range(7):
         delta = timedelta(days=i)
         week.append(datetime.strftime((first_day+delta), "%d-%B"))
-    return render(request, "ReadCalendar.html", {'activities' : activities,'week' : week,
+    return render(request, "Calendar/ReadCalendar.html", {'activities' : activities,'week' : week,
                             'year' : year, 'range7' : range(7), 'range24' : range(24), 'month' : month, 'way' : way})
 
 

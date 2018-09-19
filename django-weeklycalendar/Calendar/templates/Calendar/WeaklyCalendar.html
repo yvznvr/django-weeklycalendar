@@ -66,24 +66,24 @@
         <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Etkinlik</h4>
+            <h4 class="modal-title">Activity</h4>
         </div>
         <div class="modal-body">
             <form id="modal-form"> {% csrf_token %}
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="title">Başlık</label>
+                        <label for="title">Title</label>
             </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="title" placeholder="Başlık Giriniz">
+                <input type="text" class="form-control" id="title" placeholder="Title">
             </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label for="datepicker">Tarih</label>
+                    <label for="datepicker">Date</label>
                 </div>
                 <div class="input-group date col-md-6" id="datepicker">
-                <input type="text" class="form-control" id="date" placeholder="Tarih">
+                <input type="text" class="form-control" id="date" placeholder="Date">
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -91,10 +91,10 @@
             </div>
             <div class="row">      
                 <div class="col-md-6">
-                    <label for="timepicker-start">Başlangıç Saati</label>
+                    <label for="timepicker-start">Start Time</label>
                 </div>        
                 <div class="input-group date col-md-6" id="timepicker-start">
-                    <input type='text' id="start_time" class="form-control" placeholder="Başlangıç Saati" />
+                    <input type='text' id="start_time" class="form-control" placeholder="Start Time" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-time"></span>
                     </span>
@@ -102,10 +102,10 @@
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="timepicker-end">Bitiş Saati</label>
+                        <label for="timepicker-end">Finish Time</label>
                     </div> 
             <div class="input-group date col-md-6" id="timepicker-end">
-                <input type='text' id="finish_time" class="form-control" placeholder="Bitiş Saati" />
+                <input type='text' id="finish_time" class="form-control" placeholder="Finish Time" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-time"></span>
                 </span>
@@ -113,21 +113,21 @@
             </div>  
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="repeat_fre">Tekrar Sıklığı</label>
+                        <label for="repeat_fre">Repeat Frequency</label>
                     </div> 
             <div class="form-group col-md-6">
                 <select class="form-control" id="repeat_fre">
                     <option value=""></option>
-                    <option value="1">Gün</option>
-                    <option value="2">Hafta</option>
-                    <option value="3">Ay</option>
-                    <option value="4">Yıl</option>
+                    <option value="1">Day</option>
+                    <option value="2">Week</option>
+                    <option value="3">Month</option>
+                    <option value="4">Year</option>
                 </select>
             </div>
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="repeat_time">Tekrar Sayısı</label>
+                        <label for="repeat_time">Repeat Time</label>
                     </div> 
             <div class="form-group col-md-6">
                 <input type="number" min=1 max=20 value="1" class="form-control" id="repeat_time" placeholder="1">
@@ -135,15 +135,15 @@
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="location">Konum</label>
+                        <label for="location">Location</label>
                     </div> 
             <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="location" placeholder="Konum">
+                <input type="text" class="form-control" id="location" placeholder="Location">
             </div>   
             </div>
             <div class="row">      
                     <div class="col-md-6">
-                        <label for="color">Renk</label>
+                        <label for="color">Color</label>
                     </div> 
             <div class="form-group col-md-6">
                     <select class="form-control" id="color">
@@ -159,17 +159,17 @@
             </div>
             <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="private">
-                <label class="form-check-label" for="ozel<">Özel Mi?</label>
+                <label class="form-check-label" for="ozel<">Private?</label>
             </div>
             <div class="form-group">
-                <label for="comment">Açıklama</label>
+                <label for="comment">Comment</label>
                 <textarea class="form-control" id="comment" rows="2"></textarea>
             </div>
-            <button id="submit" type="submit" class="btn btn-primary">Onayla</button>
+            <button id="submit" type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
         <div class="modal-footer">
-            <button id="delete_button" name="" type="button" class="btn btn-danger" data-dismiss="modal">Sil</button>
+            <button id="delete_button" name="" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
         </div>
         </div>
     </div>
