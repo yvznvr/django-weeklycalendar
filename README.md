@@ -28,3 +28,7 @@ Quick Start
     ./manage.py migrate
     
 5. Start your project and test app
+
+![](https://screenshotscdn.firefoxusercontent.com/images/eb6f9804-7615-4613-859c-944efa795de0.png)
+
+![](https://screenshotscdn.firefoxusercontent.com/images/74a4ce0c-3d11-4d26-b926-7085eaad684a.png)
